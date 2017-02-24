@@ -47,6 +47,8 @@ public class BoxScript : MonoBehaviour {
 
     private void ChangeToGreen() {
         ChangeColor(colors[0]);
+        float randTime = Random.Range(2f,30f);
+        StartCoroutine(TurnBlue (randTime));
     }
 
     private void ChangeToRed() {
@@ -55,7 +57,28 @@ public class BoxScript : MonoBehaviour {
 
     private void ChangeToBlue() {
         ChangeColor(colors[2]);
+        StartCoroutine(GoBack(2f));
     }
+
+    private void OnMouseDown() {
+        if ((int)State != 0) {
+            State--;
+        }
+        else {
+            State++;
+        }
+    }
+
+    private IEnumerator GoBack(float time) {
+        yield return new WaitForSeconds(time);
+        State--;
+    }
+
+    private IEnumerator TurnBlue(float time) {
+        yield return new WaitForSeconds(time);
+        State = BoxStates.blue;
+    }
+
 
     // Update is called once per frame
     void Update () {
